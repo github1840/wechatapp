@@ -1,0 +1,117 @@
+
+page{
+  background-color: #F5F5F5 ;
+}
+.container{
+  min-height: 100%;
+  overflow: hidden;
+  overflow-y: hidden;
+}
+.userinfo {
+	display: flex;
+	flex-direction: column;
+	padding: 50rpx 0;
+	align-items: center;
+	background: #e85654;
+  width: 750rpx;
+}
+
+.userinfo-avatar {
+	width: 160rpx;
+	height: 160rpx;
+	margin: 20rpx;
+	border-radius: 50%;
+}
+
+.userinfo-nickname {
+  margin-top: 20rpx;
+  color: #FFF;
+}
+
+
+.version {
+  width:100%;
+  height: 40rpx;
+	line-height: 40rpx;
+	font-size: 24rpx;
+	text-align: center;  
+  padding: 40rpx;
+}
+
+.my-item{
+    width: 100%;
+    background: url(http://cdn.static.54php.cn/mina_order/arrow-right.png) no-repeat 750rpx center;
+    background-size: 16rpx auto,750rpx auto;
+    margin: 20rpx 0; 
+    border-bottom: 1px solid #eee;
+    height: 100rpx;
+    line-height: 100rpx;
+    padding-left: 100rpx;
+}
+
+.goods-container{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap:wrap;
+  box-sizing: content-box;
+  padding: 24rpx;
+
+}
+.goods-box{
+  width: 600rpx;
+  height: 310rpx;
+  background-color: #fff;
+  overflow: hidden;
+  margin-bottom: 50rpx;
+  margin-left:50rpx;
+  border-radius: 7px;
+
+}
+.goods-box .img-box{
+  width: 600rpx;
+  height: 200rpx;
+  overflow: hidden;
+  align:center;
+
+}
+.goods-box .img-box image{
+   width: 600rpx;
+   height: 200rpx;
+
+}
+.goods-box .goods-title{
+  width: 600rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 30rpx;
+  font-weight:bold;
+  color:#000;
+  background-color:#fff;
+  margin-top:10rpx;
+  margin-left:10rpx;
+
+}
+.goods-box .goods-course-name{
+  width: 600rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 24rpx;
+  color:#000;
+  text-align:center;
+  margin-top:20rpx;
+  background-color:#fff;
+}
+.goods-box .goods-comments-date{
+  width: 600rpx;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 24rpx;
+  color: #AAAAAA;
+  text-align:left;
+  background-color:#fff;
+  margin-top:10rpx;
+  margin-left:20rpx;
+}

@@ -1,0 +1,123 @@
+<import src="../../wxParse/wxParse.wxml" />
+
+
+     <view class='goods-container'>
+        <view class='goods-box'>
+          <view class = 'img-box'>
+               <image class='img' src="{{info.pics}}" mode="aspecrFill"/>
+          </view>
+        </view>
+
+        <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+                <view class="weui-media-box__title weui-media-box__title_in-text">{{info.name}}</view>
+                <view class="weui-media-box__desc">每期价格:{{info.price}}</view>
+                <view class="weui-media-box__info">
+                    <view class="weui-media-box__info__meta">报名人数：{{info.register_number}}</view>
+                    <view class="weui-media-box__info__meta weui-media-box__info__meta_extra" bindtap="toMyCourseActivity" data-id="{{info.id}}">课程动态</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+   <!--商品基本介绍-->
+
+    <view class="goods-des-info">
+        <view class="goods-text">
+            <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+         </view>
+    </view>
+
+
+
+
+    <!--用户评价-->
+    <view class="goods-des-info" style="margin-top:35rpx;" wx:if="{{commentList}}">
+
+        <view  class='comment-title-box' >
+            <view class="comment-title" >课程评论<text style="color:red">（{{commentCount}}）</text></view>
+            <button class="weui-btn mini-btn" type="warn" size="mini" bindtap="toComment" data-id="{{info.id}}">评论 | 建议</button>
+        </view>
+
+        <view  class='comment-container' hidden="{{commentCount}}">
+             <view  class='comment-box'>
+                <view class="icon-box" ></view>
+                <view class="non-comment-title"> ~~~~请您留言~~~~</view>
+                <view class="icon-box" ></view>
+             </view>
+        </view>
+
+        <view class="goods-text" style="margin-top:15rpx;margin-left:15rpx;border-bottom:1px solid #eee;" wx:for="{{commentList}}">
+          <view style="width:100rpx;float:left;">
+               <image  style="width: 100rpx; height: 100rpx;" src="{{item.user.avatar_url}}"></image>
+               <view style="text-align:center;width:100rpx;">{{item.score}}</view>
+          </view>
+          <view style="width:550rpx;float:left;margin-left:35rpx;">
+            <view>{{item.content}}</view>
+            <view style="color: #B0B0B0;font-size:24rpx;">{{item.date}}</view>
+          </view>
+        </view>
+    </view>
+    <!--底部-->
+    <view class="footer-box">
+        <!--左侧的小小脚标-->
+        <view class="shop-cart-btn" bindtap="goShopCar">
+            <view class="shop-num">({{shopCarNum}})</view>
+            <view style='position:absolute;bottom:10rpx;'> 已报名 </view>
+        </view>
+        <!--报名按钮-->
+        <view class="join-shop-cart" bindtap="toAddShopCar">课程报名</view>
+        <view class="now-buy" >分享课程</view>
+        <view class="goods-info-fx">
+          <button open-type="share">分享</button>
+        </view>
+
+   </view>
+   <!--购买和收藏弹窗-->
+    <view class="show-popup" hidden="{{hideShopPopup}}" >
+        <view class="popup-mask" bindtap="closePopupTap"></view>
+        <view class="popup-contents">
+             <view class="pop-goods-info">
+                <view class="pop-img-box">
+                    <image src="{{info.main_image}}" class="goods-thumbnail"/>
+                </view>
+                <view class="pop-goods-des">
+                    <view class="pop-goods-title">{{info.name}}</view>
+                    <view class="pop-goods-price">$ {{info.price}}</view>
+                </view>
+                <view class="pop-goods-close" bindtap="closePopupTap"></view>
+             </view>
+
+
+             <view class="weui-cells weui-cells_after-title" margin-left:30rpx; margin-right:30rpx; >
+
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__bd">
+                        <text>请您务必输入联系方式和姓名！</text>
+                    </view>
+                </view>
+
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" placeholder="手机号码" bindinput='listenerMobileInput'></input>
+                    </view>
+                </view>
+
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__bd">
+                        <input class="weui-input" placeholder="报名者姓名" bindinput='listenerNameInput'></input>
+                    </view>
+                </view>
+
+
+            </view>
+             <view class="popup-join-btn" wx:if="{{shopType =='addShopCar'}}" bindtap="addShopCar">
+                报名
+             </view>
+        </view>
+    </view>
+
+<!---底部隐藏部位-->
+<view class ="bottom-box" >
+
+</view>

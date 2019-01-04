@@ -1,0 +1,76 @@
+<!--index.wxml-->
+<!--头像部分-->
+<view class="userinfo">
+     <view class="userinfo-avatar">
+        <open-data type="userAvatarUrl"></open-data>
+     </view>
+     <view class="nickName">
+       <open-data type="userNickName"></open-data>
+     </view>
+ </view>
+
+
+
+
+<!--已报课程-->
+<view class="container" >
+    <view class="title-box" wx:if="{{!list.length}}">
+        还没有报名任何课程～
+    </view>
+    <view class="to-index-btn" bindtap="toIndexPage" wx:if="{{!list.length}}">
+
+        去课程首页看看~~
+    </view>
+
+    <view class="list-top" wx:if="{{list.length}}">
+        <view class="label">已经登记课程</view>
+        <view class="edit-btn" hidden="{{!saveHidden}}" bindtap="editTap">点击退课</view>
+        <view class="edit-btn" hidden="{{saveHidden}}" bindtap="saveTap">完成</view>
+    </view>
+
+    <view class="goodsList" wx:if="{{list.length}}">
+        <view class="a-goods" wx:for="{{ list }}"  wx:key="{{index}}" >
+
+             <!---下面两段代码分别是不点击编辑退课，不显示左侧checkbox,以及点击编辑 出现选中的checkbox 以及退课栏-->
+            <view class ="goods-box" hidden="{{!saveHidden}}">
+                    <view class="goods-info"  bindtap='TabCourseInfo' data-id="{{item.course_id}}">
+                        <view class="img-box">
+                            <image src="{{item.pic_url}}" class="img" mode='aspectFill'/>
+                        </view>
+                        <view class="text-box">
+                            <view class="goods-title">{{item.name}}</view>
+                            <view class="goods-price">$ {{item.price}}</view>
+                            <view class="goods-title">{{item.course_date}}</view>
+                            <view class="goods-title">{{item.location}}</view>
+                        </view>
+                    </view>
+             </view>
+
+             <!---出现选中的checkbox 以及退课栏-->
+            <view hidden="{{saveHidden}}" >
+                  <view class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" data-index="{{index}}">
+                    <view class="goods-info">
+                        <view class="img-box">
+                            <image src="{{item.pic_url}}" class="img"/>
+                        </view>
+                        <view class="text-box">
+                            <view class="goods-title">{{item.name}}</view>
+                            <view class="goods-price">$ {{item.price}}</view>
+                            <view class="goods-title">{{item.course_date}}</view>
+                            <view class="goods-title">{{item.location}}</view>
+                        </view>
+                    </view>
+                  </view>
+
+                 <!--- 退课栏-->
+                  <view class="jiesuan-box" wx:if="{{list.length}}">
+                      <view class="left-price">
+                          <view class="all-selected  {{allSelect?'active':''}}" bindtap="bindAllSelect">全选</view>
+                      </view>
+                      <view class="to-pay-btn {{noSelect?'no-select':''}}" hidden="{{saveHidden}}" bindtap="deleteSelected">退课</view>
+                  </view>
+            </view>
+        </view>
+    </view>
+    <view class="no-more-goods"  hidden="{{loadingMoreHidden ? true : false}}" >已经到底啦</view>
+</view>

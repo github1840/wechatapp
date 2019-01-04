@@ -1,0 +1,12 @@
+
+<view class = 'page'>
+    <view class="goods-container">
+        <view class="goods-box" wx:for-items="{{list}}"  bindtap="TabCommentInfo" data-id="{{item.id}}" >
+          <view class="img-box">
+            <image src="{{item.pic_url}}" class="image" mode="aspectFill" lazy-load="true" />
+          </view>
+          <view class="goods-title">{{item.title}}</view>
+          <view class="goods-comments-date">{{item.updated_date}}</view>
+        </view>
+      </view>
+</view>

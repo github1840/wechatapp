@@ -1,0 +1,202 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+{% extends "common/layout_main.html" %}
+{% block content %}
+<div class="row  border-bottom">
+    <div class="col-lg-12">
+        <div class="tab_title">
+            <ul class="nav nav-pills">
+                <li class="">
+                    <a href="{{ buildUrl('/course/index') }}">课程</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+            <div class="col-lg-4">
+                <h2 class="text-center">课程基本信息</h2>
+                <p class="m-t">课程名：{{ info.name }}</p>
+                <p>售价：{{ info.price }}</p>
+                <p>库存总量：{{ info.stock }}</p>
+                <p>图书标签：{{ info.tags }}</p>
+                <p>封面图：<img src="{{ buildImageUrl( info.main_image ) }}" style="width: 100px;height: 100px;"></p>
+                <p>描述：</p>
+                <p>{{ info.summary | safe }}</p>
+                <p></p>
+            </div>
+
+
+    <!-----课程掠影------>
+            <div class="col-lg-8" style="" >
+                <h2 class="text-center">课程掠影</h2>
+                <h5 class="text-center">（上传课上图片到小程序课程动态）</h5>
+                <div class="form-horizontal m-t" style="">
+                    <div class="form-group">
+                        <!--封面banner-->
+                        <label class="col-lg-2 control-label">封面图:</label>
+                        <div class="col-lg-10">
+                            <form class="upload_pic_wrap" target="upload_file" enctype="multipart/form-data" method="POST" action="{{ buildUrl('/upload/pic') }}">
+                                <div class="upload_wrap pull-left">
+                                    <i class="fa fa-upload fa-2x"></i>
+                                    <input type="file" name="pic" accept="image/png, image/jpeg, image/jpg,image/gif">
+                                </div>
+                                 <!--------  用于显示方面图  buildImageUrl需要暴露一下  在application里面的函数模板进行注册把UrlManager 里已经做好的引入就可以在HTML中用了-->
+                                 {% if info and info.main_image %}
+                                <span class="pic-each">
+                                    <img src="{{ buildImageUrl( info.main_image ) }}"/>
+                                    <span class="fa fa-times-circle del del_image" data="{{ info.main_image }}"></span>
+                                </span>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">封面标语:</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" placeholder="请输入论坛首页动态封面标语" name="title" value="">
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+
+
+                    <!--图文输入-->
+                    <div class="form-group" style="">
+                        <label class="col-lg-2 control-label">描述:</label>
+                        <div class="col-lg-10">
+                            <textarea  id="editor"  name="summary" style="height: 300px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
+                    <div class="form-group">
+                        <div class="col-lg-4 col-lg-offset-2">
+                            <input type="hidden" name="id" value="{{info.id}}">
+                            <button class="btn btn-w-m btn-outline btn-primary save">保存</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-----课程掠影------>
+
+        <!---课程报名人--->
+      <div class="row">
+        <div class="col-lg-12">
+               <div class="row">
+                    <div class="col-lg-12" >
+                        <div class="m-b-md">
+                            <h2 class="text-center">报名者信息</h2>
+                        </div>
+                    </div>
+                </div>
+
+            <table class="table table-bordered m-t">
+                <thead>
+                <tr>
+                    <th>头像</th>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>报名状态</th>
+                    <th>付款状态</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if list %}
+                    {% for item in list %}
+                        <tr>
+                            <td><img alt="image" class="img-circle" src="{{ item.member_avatar}}" style="width: 40px;height: 40px;"></td>
+                            <td>{{item.member_name}}</td>
+                            <td>
+                               {% if item.member_sex ==1 %}
+                                   <text> 男</text>
+                               {% endif %}
+
+                                {% if item.member_sex ==2 %}
+                                   <text> 女</text>
+                               {% endif %}
+
+                                {% if item.member_sex ==0 %}
+                                   <text> 未知</text>
+                               {% endif %}
+                            </td>
+
+                            <td>
+
+                                {% if item.register_status ==0 %}
+                                <text> 退课</text>
+
+                                {% else %}
+                                   <text> 报名</text>
+
+                                {% endif %}
+
+                            </td>
+
+
+
+                            <td>
+
+                                {% if item.payment_status ==0 %}
+                                <text> 未付款</text>
+                                <a class="m-l remove" href="javascript:void(0);" data="{{ item.id  }}"> <!--这里的item.id是MemberCard id ，见instructor.py /info 中的数据来源-->
+                                    <i class="fa fa-rotate-right fa-lg"></i>
+                                </a>
+                                {% else %}
+                               <text> 已付款</text>
+                               <a class="m-l recover" href="javascript:void(0);" data="{{ item.id  }}">
+                                <i class="fa fa-rotate-left fa-lg"></i>
+                               </a>
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                     <tr><td colspan="5">暂无数据~~</td> </tr>
+                {% endif %}
+                </tbody>
+            </table>
+         </div>
+      </div>
+
+        <!---课程报名人--->
+
+    </div>
+</div>
+
+<!----- 用于上传封面图，用iframe 全文应该只有一个form ，iframe用于无刷新上传，但是form的name要和iframe的那么一致 -------->
+<iframe name="upload_file" class="hide"></iframe>
+{% endblock %}
+
+
+{% block css %}
+<!----- 用于分类栏的样式 -------->
+<link href="{{ buildStaticUrl('/plugins/select2/select2.min.css') }}" rel="stylesheet">
+
+<!-----input框 -------->
+<link href="{{ buildStaticUrl( '/plugins/tagsinput/jquery.tagsinput.min.css' ) }}" rel="stylesheet">
+{% endblock %}
+
+{% block js%}
+<!----- 用于分类 （相关文件：js/food/set.js select事件）-------->
+<script src="{{ buildStaticUrl('/plugins/select2/pinyin.core.js') }}"></script>
+<script src="{{ buildStaticUrl('/plugins/select2/select2.pinyin.js') }}"></script>
+<script src="{{ buildStaticUrl('/plugins/select2/zh-CN.js') }}"></script>
+
+<!----- 用于加载 ueditor （相关文件：upload.py ， js/food/set.js initueditor事件）-------->
+<script src="{{ buildStaticUrl('/plugins/ueditor/ueditor.config.js') }}"></script>
+<script src="{{ buildStaticUrl('/plugins/ueditor/ueditor.all.min.js') }}"></script>
+<script src="{{ buildStaticUrl('/plugins/ueditor/lang/zh-cn/zh-cn.js') }}"></script>
+<script src="{{ buildStaticUrl('/js/instructor/instructor_info.js') }}"></script>
+
+<!----- input框 相关文件：js/food/set.js input事件）-------->
+<script src="{{ buildStaticUrl( '/plugins/tagsinput/jquery.tagsinput.min.js' ) }}"></script>
+
+
+{% endblock %}
